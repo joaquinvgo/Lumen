@@ -1,0 +1,19 @@
+{% comment %} {% extends "basic.html" %} {% endcomment %}
+
+{% block content %}
+{% load bootstrap %}
+<div style="margin:10px; ">
+    <form action="/muestrabotes/" method="get" style="col:auto; flex-direction: column;"> 
+        
+        
+        {{ filter.form|bootstrap }}
+
+  
+        <input type="submit" />
+    </form>
+</div>
+
+    {% comment %} {% for obj in filter.qs %}
+        {{ obj.bote }} - {{ obj.Pais }}<br />
+    {% endfor %} {% endcomment %}
+{% endblock %}

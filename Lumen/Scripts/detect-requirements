@@ -1,0 +1,3 @@
+#!C:\Users\geoma\OneDrive\Lumen\Lumen\Scripts\python.exe
+from requirements_detector.run import run
+run()

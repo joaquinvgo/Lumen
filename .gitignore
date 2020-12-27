@@ -1,0 +1,10 @@
+/.pytest_cache
+/.vscode
+/DirectorioFotos
+/Lumen-DESKTOP-6US5EP8.db
+/Lumen-DESKTOP-99E7641.db
+/Lumen.db
+/manage.py
+/Pipfile
+/Pipfile.lock
+/static

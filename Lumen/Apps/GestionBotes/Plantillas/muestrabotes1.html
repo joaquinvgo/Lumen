@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+<head>
+    {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+ {% endcomment %}
+</head>
+
+{% block content %}
+
+
+<div style="display:flex; flex-wrap: wrap;">
+    <div style="width: 65%;">
+        <div style="width: 100%">
+        <table class="table-bordered table-striped table-dark text-light" 
+        style="width: 100%; padding: 10px;">
+            <tr>
+                <th style="width: 20%;">Datos</th>
+                <th>Imágenes</th>
+                <th>Acciones</th>
+                
+            </tr>
+
+
+            {% for obj in page_obj %} {% comment %} filter.qs %} {% endcomment %}
+            
+            <tr>
+                <td style="width: 20%;">{{ obj.id }}<br>
+                    <a>{{ obj.Carrera}}</a><br>
+                    <a>{{ obj.Equipo|upper }}</a>
+                    <br>{{ obj.Pais|upper }}<br>
+                    {{ obj.Agno }}<br>
+                    {{ obj.Modalidad }}</td>
+                <td style="text-align: center;"> {% for f in fotos %}
+                    
+                    {%  if  obj.id == f.bote.id  %}
+                        <a href="#{{ f.imagen.url }}"><img src="{{ f.imagen.url }}" height={{alto}} width={{ancho}} style="border-radius: 5%"></a>
+                    <div id="{{ f.imagen.url }}" class=modalmask>
+                        <div class="modalbox movedown">
+                        <a href="#close" title="Close" class="close">X</a>
+                        <img src="{{ f.imagen.url }}" height=660 width=330>
+                        </div>
+                    </div> 
+                    {%  endif  %}
+
+            {% endfor %} 
+                </td>
+                <td style="text-align: center;">
+                {% if request.user.is_superuser %}
+                <a href='http://127.0.0.1:8000/admin/GestionBotes/fotos/add/?bote={{obj.id}}' target='Añadir Foto' class="btn btn-success btn-lg">Añadir Foto</a><br>
+                {% endif %}
+                <br>
+                {% if not request.user.is_superuser %}
+                <a href='/contacto/?Asunto=Referencia+{{ obj.id }}+{{ obj.Carrera}}+{{ obj.Equipo|upper }}+{{ obj.Pais|upper }}+{{ obj.Agno }}' target='I want it' class="btn btn-success btn-lg">I want it</a>
+                {% endif %}
+                <br><br>
+                {% if request.user.is_superuser %} 
+                <a href='http://127.0.0.1:8000/admin/GestionBotes/botes/{{obj.id}}/change/' target='Ver + datos' class="btn btn-success btn-lg">Ver + datos</a>  
+                {% endif %}
+                <br><br>
+                {% if request.user.is_superuser %} 
+                <a href='http://127.0.0.1:8000/admin/GestionBotes/botes/{{obj.id}}/change/' target='Editar Bidón' class="btn btn-success btn-lg">Editar  Bote</a>  
+                {% endif %}
+                <br><br>
+                {% if request.user.is_superuser %}
+                <a href='/admin/GestionBotes/botes/add/' target='Añadir Bote' class="btn btn-success btn-lg">Añadir Bote</a>
+                {% endif %}
+                </td>
+
+            </tr>
+            
+        {% endfor %}
+        </table>
+        </div>
+        {% include "pagination.html" %}
+        
+    </div>
+
+    <div style="width: 15%;">       
+            <a  class="text-light">             Teclee un año para buscar año, seleccione su equipo, pais o carrera. 
+            <br>No es necesario rellenar todos los campos, sólo aquellos que le interese. <br>Una vez
+                terminado pulse el botón "Enviar". <br>Obtendra una tabla con todos los bidones que 
+                cumplan esas condiciones.<br> Pulse con el boton derecho del ratón sobre una foto para ampliarla.
+      
+            </a>
+
+            {% comment %} <form action="/muestrabotes/" method="POST" style="col:auto; flex-direction: column;">
+             <label for="zoom" class="text-light">zoom:</label>
+             <input id="zoom" type="text" name="zoom">
+            <input type="submit" label='zoom' value="zoom">
+ {% endcomment %}
+            </form>
+    </div>       
+    
+     <div style="width: 20%;"> 
+        
+            <a class="position-fixed text-light" style="text-align:left; width: 250px; background-color: 445566">
+            Filtros para buscar botes:<br>
+            {% include 'mifiltro2.html' %}
+            </a>
+    </div>
+  
+</div>
+    
+
+{% endblock %}

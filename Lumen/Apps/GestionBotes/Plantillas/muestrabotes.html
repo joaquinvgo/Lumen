@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+<head>
+
+</head>
+<body>
+{% block content %}
+
+
+<div class="d-inline-flex" style="max-width: 100%">
+    <div  id="botes" class="flex-row"  style="width: 70%;">
+    
+        
+       
+        {% for obj in page_obj %} {% comment %} filter.qs %} {% endcomment %}
+           <div id="fila de bote" class="border border primary rounded" style="display: flex; flex-wrap: nowrap;">
+           
+            <div id='datos' class="text-light" style="float:left; width: 25%;">
+                <ul>
+                    <li> {{ obj.id }}</li>
+                    <li>{{ obj.Carrera}}</li>
+                    <li>{{ obj.Equipo|upper }}</li>
+                    <li>{{ obj.Pais|upper }}</li>
+                    <li>{{ obj.Agno }}</li>
+                </ul>
+            </div>
+
+            <div id='fotos'class="row" style="padding: 5px; width: 75%; margin-right: 0; margin-left: 0;">
+
+                {% for f in fotos %}
+                    {%  if  obj.id == f.bote.id  %}
+                    <div class="align-self-xl-start" style="display:inline-block;">
+
+                            <a href="#{{ f.imagen.url }}"><img src="{{ f.imagen.url }}" height={{alto}} width={{ancho}} style="border-radius: 5%"></a>
+                        <div id="{{ f.imagen.url }}" class="modalmask">
+                            <div class="modalbox" >
+                                <a href="#close" title="Close" class="close">X</a>
+                                <img src="{{ f.imagen.url }}" height=660 width=330>
+                            </div>
+                        </div> 
+                        
+                    </div>
+                    {%  endif  %}
+                {% endfor %} 
+            </div>
+
+            <div id='botonesverdes'  style="margin:0.5em; ">
+                {% if not request.user.is_superuser %}
+                <a href='/contacto/?Asunto=Referencia+{{ obj.id }}+{{ obj.Carrera}}+{{ obj.Equipo|upper }}+{{ obj.Pais|upper }}+{{ obj.Agno }}' target='I want it' class="btn btn-success btn-lg">I want it</a>
+                {% endif %}
+                <br>
+                {% if request.user.is_superuser %}
+                <a href='http://127.0.0.1:8000/admin/GestionBotes/fotos/add/?bote={{obj.id}}' target='Añadir Foto' class="btn btn-success btn-sm">Añadir Foto</a><br>
+                {% endif %}
+                <br>
+                
+                {% if request.user.is_superuser %} 
+                <a href='http://127.0.0.1:8000/admin/GestionBotes/botes/{{obj.id}}/change/' target='Ver + datos' class="btn btn-success btn-sm">Ver + datos</a>  
+                {% endif %}
+                <br><br>
+                {% if request.user.is_superuser %} 
+                <a href='http://127.0.0.1:8000/admin/GestionBotes/botes/{{obj.id}}/change/' target='Editar Bidón' class="btn btn-success btn-sm">Editar  Bote</a>  
+                {% endif %}
+                <br><br>
+                {% if request.user.is_superuser %}
+                <a href='/admin/GestionBotes/botes/add/' target='Añadir Bote' class="btn btn-success btn-sm">Añadir Bote</a>
+                {% endif %}
+
+            </div>
+        
+           </div>
+        {% endfor %}
+       
+        <div>
+            {% include "pagination.html" %}
+        </div>
+    </div>
+
+    <div id="Nota" class="text-light" style="width: 15%; padding: 1em;">       
+            <a  class="text-light">             Teclee un año para buscar año, seleccione su equipo, pais o carrera. 
+            <br>No es necesario rellenar todos los campos, sólo aquellos que le interese. <br>Una vez
+                terminado pulse el botón "Enviar". <br>Obtendra una tabla con todos los bidones que 
+                cumplan esas condiciones.<br> Pulse con el boton izquierdo del ratón sobre una foto para ampliarla.
+            </a>
+                <form  method="POST"> {% csrf_token %}
+                    <!-- Número entre 1 y 2, de .1 en .1 Valor por defecto: 1.4 -->
+                   
+                    <input type="range" min="1.2" max="1.9" value={{ zoom }}  step="0.1" name="zoom">
+                   
+                    <input type="submit" value="zoom fotos">
+                </form>
+    </div>    
+ 
+    <div id="flitrosbotes" style="width: 15%;"> 
+        
+            <a class="position-fixed text-light" style="text-align:left; background-color: 445566">
+            {% include 'mifiltro2.html' %}
+            </a>
+    </div>
+  
+</div>
+    
+
+{% endblock %}
+</body>
