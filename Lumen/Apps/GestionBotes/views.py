@@ -34,8 +34,6 @@ def bienvenido(request):
     
 def muestrabotes(request):
     zoom=2
-
-    
     botes = Botes.objects.filter().order_by('Agno')
     fotos = Fotos.objects.all()
     mifiltro = BotesFilter(request.GET, queryset = botes)
@@ -53,6 +51,7 @@ def muestrabotes(request):
     'filter':mifiltro,'page_obj': page_obj, 'paginator': paginator, 
     'page_number': page_number, 'context': context, "zoom": zoom}
     return render(request, 'muestrabotes.html',params)
+    
 
 def indice(request):
     register_form =BotesForm() 
