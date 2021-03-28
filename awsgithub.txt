@@ -1,0 +1,62 @@
+S3 bucket name: lumenawsbucket
+Acces Key Id: AKIAY4FVCDCQETYESKWK
+Secret Key: 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
+IAM User ARN: arn:aws:iam::610265077920:user/lumenawsgithubuser
+
+# para Amazon Linux
+mkdir /etc/codedeploy-agent/
+
+mkdir /etc/codedeploy-agent/conf
+
+cat <<EOT >> /etc/codedeploy-agent/conf/codedeploy.onpremises.yml
+
+---
+
+aws_access_key_id: AKIAY4FVCDCQETYESKWK
+
+aws_secret_access_key: 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
+
+iam_user_arn: arn:aws:iam::610265077920:user/lumenawsgithubuser
+
+region: eu-west-3
+
+EOT
+
+wget https://aws-codedeploy-us-west-2.s3.us-west-2.amazonaws.com/latest/install
+
+chmod +x ./install
+sudo ./install auto
+
+#para amazon Linux 2
+mkdir /-p etc/codedeploy-agent/conf
+
+cat <<EOT >> /etc/codedeploy-agent/conf/codedeploy.onpremises.yml
+
+---
+
+aws_access_key_id: ACCESS #AKIAY4FVCDCQETYESKWK
+
+aws_secret_access_key: SECRET #sXvReWdL+NM+CaDdvTZkmNbEGTsfISjZNU9eXrEP
+
+iam_user_arn: arn:aws:iam::610265077920:user/GeneralUsser #lumenawsgithubuser
+
+region: eu-west-3
+
+EOT
+
+yum install -y wget ruby
+wget https://aws-codedeploy-us-west-2.s3.us-west-2.amazonaws.com/latest/install
+
+chmod +x ./install
+env AWS_REGION=eu-west-3 ./install rpm
+
+#usuario LightSailCodeDeployUser
+
+Ha creado correctamente los usuarios que se muestran a continuación. Puede ver y descargar las credenciales de seguridad de los usuarios. También puede enviar a los usuarios un correo electrónico con instrucciones para iniciar sesión en la consola de administración de AWS. Esta es la última vez que las credenciales estarán disponibles para descargarlas. Sin embargo, puede crear otras en cualquier momento.
+
+Los usuarios con acceso a la consola de administración de AWS pueden iniciar sesión en: https://610265077920.signin.aws.amazon.com/console 
+
+ID de clave de acceso: AKIAY4FVCDCQFJ6GKA5G
+Clave de acceso secreta: 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
+arn:aws:iam::610265077920:user/LightSailCodeDeployUser
+
