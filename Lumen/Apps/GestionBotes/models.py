@@ -7,7 +7,7 @@ from django.db import models
 class Paises(models.Model):
     # Id=models.IntegerField().auto_creation_counter
     Abrevation = models.CharField(max_length=2)
-    Nombre = models.CharField(max_length=20)
+    Nombre = models.CharField(max_length=50)
     
 
     def __str__(self):

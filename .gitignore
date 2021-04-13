@@ -8,4 +8,7 @@
 /Pipfile
 /Pipfile.lock
 /static
-settings.py
+/lumen.env
+/postgresql
+/awsgithub.txt
+LUMEN_ENV.txt

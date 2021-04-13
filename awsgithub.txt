@@ -60,3 +60,17 @@ ID de clave de acceso: AKIAY4FVCDCQFJ6GKA5G
 Clave de acceso secreta: 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
 arn:aws:iam::610265077920:user/LightSailCodeDeployUser
 
+# cargar datos de S3 a la instnacia desde la consola de la instancia:
+wget https://lumenawsbucket.s3.amazonaws.com/s3://lumenawsbucket/CodeDeployLightsailD/SourceArti/ptvQjMc.zip
+
+El proyecto de Django estará en el siguiente directorio
+
+/opt/bitnami/apps/django/django_projects/tutorial
+
+El proyecto se almacenará en el siguiente directorio
+
+/opt/bitnami/apps/django/django_projects/tutorial/tutorial
+
+La aplicación se creará en el siguiente directorio
+
+/opt/bitnami/apps/django/django_projects/tutorial/tutorial/hello_world

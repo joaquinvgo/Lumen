@@ -11,19 +11,28 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+""" import environ
+env = environ.Env(
+    # set casting, default value
+     DEBUG=(bool, False)
+ )
+# reading .env file
+environ.Env.read_env() """
+# # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
+# # Quick-start development settings - unsuitable for production
+# # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'p0e5102#s=^hbp$%+=msph1d7a%98(^nq6*%#_kpz&amr3h175'
+# # SECURITY WARNING: keep the secret key used in production secret!
+
+# SECRET_KEY = env('SECRET_KEY') 
+SECRET_KEY='p0e5102#s=^hbp$%+=msph1d7a%98(^nq6*%#_kpz&amr3h175'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG =env('DEBUG')
+DEBUG= True
 
 ALLOWED_HOSTS = []
 #ALLOWED_HOSTS = ['192.168.1.33','192.168.1.43','127.0.0.1','[::1]']
@@ -42,6 +51,7 @@ INSTALLED_APPS = [
     'django_admin_listfilter_dropdown',
     'django_filters',
     'bootstrapform',
+
             
 ]
 
@@ -84,8 +94,14 @@ WSGI_APPLICATION = 'Lumen.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'Lumen.db',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME':'postgresql_lumen', # env('POSTGRESQL_NAME'),
+        'USER': 'postgres', #env('POSTGRESQL_USER'),
+        'PASSWORD':'Balmaseda62', #env('POSTGRESQL_PASS'),
+        'HOST':'localhost', # env('POSTGRESQL_HOST'),
+        'PORT': '5432', #env('POSTGRESQL_PORT'),
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': 'Lumen.db',
         #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
@@ -137,5 +153,5 @@ EMAIL_HOST="smtp.gmail.com"
 EMAIL_USE_TLS=True
 EMAIL_PORT=587
 EMAIL_HOST_USER="joaquin@villadiego.es"
-EMAIL_HOST_PASSWORD="Boston62gmail"
+EMAIL_HOST_PASSWORD="Arenillas62gmail"
 
