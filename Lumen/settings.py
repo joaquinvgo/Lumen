@@ -96,7 +96,8 @@ DATABASES = {
         'USER':env.str('POSTGRESQL_USER'), 
         'PASSWORD':env.str('POSTGRESQL_PASS'),
         'HOST':env.str('POSTGRESQL_HOST'), 
-        'PORT':env.str('POSTGRESQL_PORT') 
+        'PORT':env.str('POSTGRESQL_Port')
+
     }
 }
 
