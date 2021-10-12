@@ -46,7 +46,7 @@ def muestrabotes(request):
         zoom=zoom
     context=request.GET
     ancho=80*zoom
-    alto=160*zoom
+    alto=107*zoom
     params = {'botes': botes, 'fotos':fotos,'ancho':ancho,'alto':alto,
     'filter':mifiltro,'page_obj': page_obj, 'paginator': paginator, 
     'page_number': page_number, 'context': context, "zoom": zoom}

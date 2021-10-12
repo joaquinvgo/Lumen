@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class GestionbotesConfig(AppConfig):
-    name = 'GestionBotes'
+    name = 'Lumen.Apps.GestionBotes'

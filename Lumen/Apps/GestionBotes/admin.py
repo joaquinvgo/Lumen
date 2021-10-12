@@ -21,8 +21,8 @@ from django.contrib.admin.filters import (
 
 class FotosAdmin(admin.ModelAdmin):
     list_display=("id","bote","imagen","fotos")
-    list_filter=['bote']
-    #search_fields=("bote",)
+    #list_filter=['bote']
+    search_fields=("id",)
 
     #Insertar la foto en list_display
     def fotos(self,obj):

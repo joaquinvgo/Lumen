@@ -10,8 +10,8 @@
 {% block content %}
 
 
-<div class="d-inline-flex" style="max-width: 100%">
-    <div  id="botes" class="flex-row"  style="width: 70%;">
+<div class="d-inline-flex" style="width: 100%">
+    <div  id="botes" class="flex-row"  style="width: 75%;">
     
         
        
@@ -38,7 +38,7 @@
                         <div id="{{ f.imagen.url }}" class="modalmask">
                             <div class="modalbox" >
                                 <a href="#close" title="Close" class="close">X</a>
-                                <img src="{{ f.imagen.url }}" height=660 width=330>
+                                <img src="{{ f.imagen.url }}" height=460 width=330>
                             </div>
                         </div> 
                         
@@ -75,11 +75,11 @@
         {% endfor %}
        
         <div>
-            {% include "pagination.html" %}
+            {% include "paginationrange.html" %}
         </div>
     </div>
 
-    <div id="Nota" class="text-light" style="width: 15%; padding: 1em;">       
+{% comment %}     <div id="Nota" class="text-light" style="width: 15%; padding: 1em;">       
             <a  class="text-light">             Teclee un año para buscar año, seleccione su equipo, pais o carrera. 
             <br>No es necesario rellenar todos los campos, sólo aquellos que le interese. <br>Una vez
                 terminado pulse el botón "Enviar". <br>Obtendra una tabla con todos los bidones que 
@@ -92,15 +92,16 @@
                    
                     <input type="submit" value="zoom fotos">
                 </form>
-    </div>    
+    </div>  {% endcomment %}   
  
-    <div id="flitrosbotes" style="width: 15%;"> 
+    <div id="flitrosbotes" style="width: 25%;"> 
         
             <a class="position-fixed text-light" style="text-align:left; background-color: 445566">
             {% include 'mifiltro2.html' %}
+            {% include 'mibusqueda.html' %}
             </a>
     </div>
-  
+
 </div>
     
 
