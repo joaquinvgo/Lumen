@@ -15,7 +15,7 @@
     
         
        
-        {% for obj in page_obj %} {% comment %} filter.qs %} {% endcomment %}
+        {% for obj in botes %} {% comment %} filter.qs %} {% endcomment %}
            <div id="fila de bote" class="border border primary rounded" style="display: flex; flex-wrap: nowrap;">
            
             <div id='datos' class="text-light" style="float:left; width: 25%;">
@@ -94,13 +94,13 @@
                 </form>
     </div>  {% endcomment %}   
  
-    <div id="flitrosbotes" style="width: 25%;"> 
+ <div id="flitrosbotes" style="width: 25%;"> 
         
             <a class="position-fixed text-light" style="text-align:left; background-color: 445566">
-            {% include 'mifiltro2.html' %}
+            {% include 'mifiltro2.html' %} <br><br>
             {% include 'mibusqueda.html' %}
             </a>
-    </div>
+    </div> 
 
 </div>
     

@@ -11,7 +11,7 @@ class Paises(models.Model):
     
 
     def __str__(self):
-        pais = self.Nombre+' ('+self.Abrevation+')'
+        pais = self.Nombre
     
         return pais
 

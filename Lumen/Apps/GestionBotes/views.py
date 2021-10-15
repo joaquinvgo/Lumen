@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 from Lumen.Apps.GestionBotes.filters import BotesFilter
 from django.core.mail import EmailMessage
 # from django.conf import settings
-#from django.db.models import Q
+from django.db.models import Q
 #from django_admin_listfilter_dropdown.filters import ( 
 #    DropdownFilter, 
 #    ChoiceDropdownFilter, 
@@ -21,7 +21,8 @@ from django.core.mail import EmailMessage
 #from django.db.models.fields import BLANK_CHOICE_DASH
 #from .admin import FotosAdmin
 from Lumen.Apps.GestionBotes.forms import BotesForm, FormularioContacto
-from Lumen.Apps.GestionBotes.models import Botes, Fotos
+from Lumen.Apps.GestionBotes.models import Botes, Fotos, Carreras, Equipos, Paises
+
 # Create your views here.
 
 
@@ -34,24 +35,35 @@ def bienvenido(request):
     
 def muestrabotes(request):
     zoom=2
-    botes = Botes.objects.filter().order_by('Agno')
+    queryset=request.GET.get("buscar")
+    print(queryset)
+    if queryset:
+        botes = Botes.objects.filter(Q(Pais__Nombre__icontains = queryset)|
+        Q(Carrera__Nombre__icontains = queryset)|
+        Q(Equipo__Nombre__icontains = queryset)|
+        Q(Agno__icontains = queryset)|
+        Q(Observaciones__icontains = queryset)).distinct().order_by('Agno')
+    else:
+        botes =Botes.objects.filter().order_by('Agno')
+
     fotos = Fotos.objects.all()
     mifiltro = BotesFilter(request.GET, queryset = botes)
-    paginator=Paginator(mifiltro.qs,6)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    try:
-        zoom=float(request.POST['zoom'])
-    except:
-        zoom=zoom
+    print(mifiltro,mifiltro.qs)
+   
+    page = request.GET.get('page',1)
+    paginator = Paginator(mifiltro.qs,6)
+    page_range = paginator.get_elided_page_range(number=page)
+    botes = paginator.get_page(page)
+    
+    
     context=request.GET
     ancho=80*zoom
     alto=107*zoom
     params = {'botes': botes, 'fotos':fotos,'ancho':ancho,'alto':alto,
-    'filter':mifiltro,'page_obj': page_obj, 'paginator': paginator, 
-    'page_number': page_number, 'context': context, "zoom": zoom}
+    'filter':mifiltro,'botes': botes, 'paginator': paginator, 
+    'page_number': page, 'page_range': page_range, 'context': context, "zoom": zoom,"queryset": queryset}
     return render(request, 'muestrabotes.html',params)
-    
+  
 
 def indice(request):
     register_form =BotesForm() 
