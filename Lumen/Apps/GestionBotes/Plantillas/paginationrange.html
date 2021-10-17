@@ -2,7 +2,7 @@
 <div class="mt-2">
     <ul class="pagination">
     {% if botes.has_previous %}
-        <li class="page-item"><a class="page-link" href="?Agno={{ context.Agno }}&Equipo={{ context.Equipo }}&Pais={{ context.Pais }}&Carrera={{ context.Carrera }}&page={{ botes.previous_page_number }}" >&laquo;</a></li>
+        <li class="page-item"><a class="page-link" href="?buscar={{context.buscar}}&Agno={{ context.Agno }}&Equipo={{ context.Equipo }}&Pais={{ context.Pais }}&Carrera={{ context.Carrera }}&page={{ botes.previous_page_number }}" >&laquo;</a></li>
     {% else %}
         <li class="disabled page-item"><span class="page-link">&laquo;</span></li>
     {% endif %}
@@ -15,12 +15,12 @@
             {% if i == botes.paginator.ELLIPSIS %}
                 <li class="page-item"><span class="page-link">{{ i }}</span></li>
             {% else %}
-                <li class="page-item"><a class="page-link" href="?Agno={{ context.Agno }}&Equipo={{ context.Equipo }}&Pais={{ context.Pais }}&Carrera={{ context.Carrera }}&page={{ i }}">{{ i }}</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ i }}&buscar={{context.buscar}}&Agno={{ context.Agno }}&Equipo={{ context.Equipo }}&Pais={{ context.Pais }}&Carrera={{ context.Carrera }}">{{ i }}</a></li>
             {% endif %}
         {% endif %}
     {% endfor %}
     {% if botes.has_next %}
-        <li class="page-item"><a class="page-link" href="?Agno={{ context.Agno }}&Equipo={{ context.Equipo }}&Pais={{ context.Pais }}&Carrera={{ context.Carrera }}&page={{ botes.next_page_number }}">&raquo;</a></li>
+        <li class="page-item"><a class="page-link" href="?buscar={{context.buscar}}&Agno={{ context.Agno }}&Equipo={{ context.Equipo }}&Pais={{ context.Pais }}&Carrera={{ context.Carrera }}&page={{ botes.next_page_number }}">&raquo;</a></li>
     {% else %}
         <li class="disabled page-item"><span class="page-link">&raquo;</span></li>
     {% endif %}

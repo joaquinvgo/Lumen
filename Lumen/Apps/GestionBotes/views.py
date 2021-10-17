@@ -1,3 +1,4 @@
+from typing import Tuple
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 #from django.http import HttpResponse
@@ -22,7 +23,9 @@ from django.db.models import Q
 #from .admin import FotosAdmin
 from Lumen.Apps.GestionBotes.forms import BotesForm, FormularioContacto
 from Lumen.Apps.GestionBotes.models import Botes, Fotos, Carreras, Equipos, Paises
-
+#from itertools import chain
+from functools import reduce
+import operator
 # Create your views here.
 
 
@@ -35,23 +38,40 @@ def bienvenido(request):
     
 def muestrabotes(request):
     zoom=2
-    queryset=request.GET.get("buscar")
-    print(queryset)
-    if queryset:
-        botes = Botes.objects.filter(Q(Pais__Nombre__icontains = queryset)|
-        Q(Carrera__Nombre__icontains = queryset)|
-        Q(Equipo__Nombre__icontains = queryset)|
-        Q(Agno__icontains = queryset)|
-        Q(Observaciones__icontains = queryset)).distinct().order_by('Agno')
-    else:
-        botes =Botes.objects.filter().order_by('Agno')
-
+    queryset = request.GET.get("buscar")
+    
     fotos = Fotos.objects.all()
+    botes=Botes.objects.filter()
+
+    if queryset:
+        mispalabras=tuple(str(queryset).split())
+        tag_qs = reduce(operator.or_, (Q(Pais__Nombre__icontains = i)|
+            Q(Carrera__Nombre__icontains = i)|
+            Q(Equipo__Nombre__icontains = i)|
+            Q(Agno__icontains = i)|
+            Q(Observaciones__icontains = i) for i in mispalabras))
+        botes = Botes.objects.filter(tag_qs).order_by('Agno')
+        """         mispalabras=tuple(str(queryset).split())
+        print("Estas son mis palabras:", mispalabras)
+        for i in mispalabras:
+            botes2 = Botes.objects.filter(Q(Pais__Nombre__icontains = i)|
+            Q(Carrera__Nombre__icontains = i)|
+            Q(Equipo__Nombre__icontains = i)|
+            Q(Agno__icontains = i)|
+            Q(Observaciones__icontains = i)).distinct().order_by('Agno')
+        botes = botes.union(botes2,) """
+    else:
+        botes = Botes.objects.filter().order_by('Agno')
+    
     mifiltro = BotesFilter(request.GET, queryset = botes)
-    print(mifiltro,mifiltro.qs)
-   
+    print("Esto es mifiltro:", mifiltro, "Esto es mifiltro.qs",mifiltro.qs, "Esto es request.get:", request.GET)
+    if queryset:
+        botes = botes.union(mifiltro.qs,)
+    else:
+        botes = mifiltro.qs 
     page = request.GET.get('page',1)
-    paginator = Paginator(mifiltro.qs,6)
+    paginator = Paginator(botes,6)
+    page_obj =paginator.get_page(page)
     page_range = paginator.get_elided_page_range(number=page)
     botes = paginator.get_page(page)
     
@@ -60,8 +80,9 @@ def muestrabotes(request):
     ancho=80*zoom
     alto=107*zoom
     params = {'botes': botes, 'fotos':fotos,'ancho':ancho,'alto':alto,
-    'filter':mifiltro,'botes': botes, 'paginator': paginator, 
-    'page_number': page, 'page_range': page_range, 'context': context, "zoom": zoom,"queryset": queryset}
+    'filter':mifiltro,'paginator': paginator, 'page_obj': page_obj,
+    'page_number': page, 'page_range': page_range, 'context': context,
+    'zoom': zoom,'queryset': queryset}
     return render(request, 'muestrabotes.html',params)
   
 

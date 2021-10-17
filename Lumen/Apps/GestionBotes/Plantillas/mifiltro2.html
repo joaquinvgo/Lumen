@@ -8,12 +8,9 @@
         
         {{ filter.form|bootstrap}}
 
-  
-        <input type="submit"/>
+        <input type="submit" name="enviar"/>
     </form>
 </div>
 
-    {% comment %} {% for obj in filter.qs %}
-        {{ obj.bote }} - {{ obj.Pais }}<br />
-    {% endfor %} {% endcomment %}
+
 {% endblock %}
